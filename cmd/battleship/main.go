@@ -2,41 +2,47 @@ package main
 
 import (
 	//"gobattleship/UI"
-	"gobattleship/game"
-	"gobattleship/internal/service"
-	"fmt"
+	//"fmt"
 	"log"
+
+	"github.com/allanjose001/go-battleship/internal/ai"
+	"github.com/allanjose001/go-battleship/internal/entity"
+	"github.com/allanjose001/go-battleship/internal/service"
 )
 
 func main() {
-	//fmt.Println("Backend is running...");
-	
-	//UI.Run();
 
-	board1 := new(game.Board);
+	//========= teste inserção no tabuleiro ============
+	board1 := new(entity.Board);
 
-	//game.PrintBoard(board1);
-
-	barco1 := new(game.Ship);
+	barco1 := new(entity.Ship);
 	barco1.Size = 3;
 	barco1.Horizontal = true;
 
-	barco2 := new(game.Ship);
+	barco2 := new(entity.Ship);
 	barco2.Size = 3;
+	barco2.Horizontal = false;
 
-	fmt.Println("");
 
-	game.PlaceShip(board1, barco1, 1, 1);
+	entity.PlaceShip(board1, barco1, 1, 1);
 
-	//game.PrintBoard(board1);
+	entity.PlaceShip(board1, barco2, 5, 5);
 
-	fmt.Println("");
+	entity.PrintBoard(board1);
 
-	//fmt.Println("hit count barco1:", barco1.HitCount);
+	//fmt.Println("");
 
-	game.AttackPosition(board1, 1, 1);
+	//entity.AttackPosition(board1, 1, 1);
 
-	//fmt.Println("hit count barco1:", barco1.HitCount);
+
+	
+	//========= teste AI ===========
+	
+	aiPlayer := ai.NewEasyAIPlayer();
+	
+	aiPlayer.Attack(board1);
+	
+	entity.PrintBoard(board1);
 
 	//========== teste de profile ===========
 
@@ -53,12 +59,12 @@ func main() {
 		log.Fatal(err)
 	}
 
-	profile2, err := service.FindProfile("Player2");
-	if err != nil {
-		log.Fatal(err)
-	}
+	//profile2, err := service.FindProfile("Player2");
+	//if err != nil {
+	//	log.Fatal(err)
+	//}
 
-	fmt.Printf("perfil encontrado: %+v\n", profile2);
+	//fmt.Printf("perfil encontrado: %+v\n", profile2);
 
 	//service.RemoveProfile("Player1");
 
